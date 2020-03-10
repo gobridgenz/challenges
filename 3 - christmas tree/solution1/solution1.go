@@ -11,9 +11,6 @@ func main() {
 func printChristmasTree(height int) {
 	if height < 1 {
 		return
-	} else if height == 1 {
-		fmt.Println("o")
-		fmt.Println("\"")
 	}
 
 	width := height*2 - 1
