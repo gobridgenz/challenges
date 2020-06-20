@@ -9,6 +9,25 @@ Each turn, you can make a guess and the game will tell you if the number is smal
 
 The game can be done in the [Go playground](https://play.golang.org/).
 
+### Output example
+
+```
+Enter a number: 500
+It's less!
+Enter a number: 200
+It's more!
+Enter a number: 400
+It's more!
+Enter a number: 450
+It's more!
+Enter a number: 470
+It's more!
+Enter a number: 480
+It's less!
+Enter a number: 479
+✨ You win! ✨
+```
+
 ## Where should I start?
 
 Try to "cut" the game in smaller chunks in your head. If you have no idea where to start, don't hesitate to look at the first tip! They are here to help you to build that game little by little.
