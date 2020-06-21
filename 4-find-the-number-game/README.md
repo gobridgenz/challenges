@@ -7,8 +7,6 @@ The goal of the game if to find that number!
 
 Each turn, you can make a guess and the game will tell you if the number is smaller, greater or if you won!
 
-The game can be done in the [Go playground](https://play.golang.org/).
-
 ### Output example
 
 ```
@@ -27,6 +25,14 @@ It's less!
 Enter a number: 479
 ✨ You win! ✨
 ```
+
+## Environment set up
+
+This time, you will need to have your environment set up:
+- A tool to write your code (we recommend [VSCode](https://code.visualstudio.com/download))
+- [Go](https://golang.org/dl/) installed on you computer;
+
+Don't hesitate to ask for help during a workshop if you have some trouble to install everything!
 
 ## Where should I start?
 
