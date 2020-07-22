@@ -1,4 +1,4 @@
-# Hangman
+# The bunny (Hangman game)
 
 ## Goal of the game
 
@@ -61,7 +61,7 @@ func chooseWord() (string, error) {
 <summary>Tip 2</summary>
 
 You will need another variable `hiddenWord` to store the progress of the player.
-It should be the same length than your chosen word, but contains only `_`.
+It should be the same length than your chosen word, but it only contains: `_`.
 </details>
 
 
@@ -87,7 +87,6 @@ Store the user input in a `letter` variable.
 Write a function `replaceLetter` which replaces all occurrences a given letter in the hidden word.
 </details>
 
-
 <details>
 <summary>Tip 5</summary>
 
@@ -101,63 +100,67 @@ You can store the score of the player in a variable (for example: `bad`).
 Each time the player give a wrong answer, increment this value and display the associated picture:
 
 ```go
-var hangmanPics = []string{
+var pics = []string{
 	`
-  +---+
-  |   |
-      |
-      |
-      |
-      |
-=========`,
+               __
+              \  ,\
+              " =__)
+`,
 	`
-  +---+
-  |   |
-  O   |
-      |
-      |
-      |
-=========`,
+             ,\
+             \\\,_
+              \  ,\
+              " =__)
+`,
 	`
-  +---+
-  |   |
-  O   |
-  |   |
-      |
-      |
-=========`,
+             ,\
+             \\\,_
+              \  ,\
+         __,.-" =__)
+       ."        )
+      /         /
+      |______--'
+`,
 	`
-  +---+
-  |   |
-  O   |
- /|   |
-      |
-      |
-=========`,
+             ,\
+             \\\,_
+              \  ,\
+         __,.-" =__)
+       ."        )
+      /        \/
+      |______-\ \_
+               '--'
+`,
 	`
-  +---+
-  |   |
-  O   |
- /|\  |
-      |
-      |
-=========`,
+             ,\
+             \\\,_
+              \  ,\
+         __,.-" =__)
+       ."        )
+      /        \/\_
+      |_____-\ \_-'
+              '--'
+`,
 	`
-  +---+
-  |   |
-  O   |
- /|\  |
- /    |
-      |
-=========`,
+             ,\
+             \\\,_
+              \  ,\
+         __,.-" =__)
+       ."        )
+      /   ,    \/\_
+      |    )_-\ \_-'
+      '-----' '--'
+`,
 	`
-  +---+
-  |   |
-  O   |
- /|\  |
- / \  |
-      |
-=========`}
+             ,\
+             \\\,_
+              \  ,\
+         __,.-" =__)
+       ."        )
+    ,_/   ,    \/\_
+    \_|    )_-\ \_-'
+      '-----' '--'
+`}
 
 bad := 1
 fmt.Println(hangmanPics[bad])
