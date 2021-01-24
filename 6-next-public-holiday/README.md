@@ -53,6 +53,14 @@ the URL with the current year!
 ```
 </details>
 
+### Example
+
+```txt
+$> go run main.go
+Today we are the 2021-01-26.
+Next public holiday is 'Waitangi Day' the 2021-02-08.
+```
+
 ## Help
 
 Remember that it's a good idea to search online at any time!
