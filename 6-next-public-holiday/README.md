@@ -1,12 +1,22 @@
 # Next public holiday
 
+## What you'll learn
+
+- Query a JSON API
+- Parse and compare times
+
 ## Goal
 
 The goal of this challenge is to display the next public holiday in New Zealand.
-To do so, you can request this public API:
+
+```txt
+$> go run main.go
+The next public holiday is 'Waitangi Day' on 02/08
+```
+
+To do so, you can query this public API:
 
 https://date.nager.at/api/v2/publicholidays/2021/NZ
-
 
 If you want your program to work next year, find a way to replace `2021` from
 the URL with the current year!
@@ -16,54 +26,47 @@ the URL with the current year!
 
 ```json
 [
-	{
-		"date": "2021-01-01",
-		"localName": "New Year's Day",
-		"name": "New Year's Day",
-		"countryCode": "NZ",
-		"fixed": false,
-		"global": true,
-		"counties": null,
-		"launchYear": null,
-		"type": "Public"
-	},
-	{
-		"date": "2021-01-04",
-		"localName": "Day after New Year's Day",
-		"name": "Day after New Year's Day",
-		"countryCode": "NZ",
-		"fixed": false,
-		"global": true,
-		"counties": null,
-		"launchYear": null,
-		"type": "Public"
-	},
-	{
-		"date": "2021-02-08",
-		"localName": "Waitangi Day",
-		"name": "Waitangi Day",
-		"countryCode": "NZ",
-		"fixed": false,
-		"global": true,
-		"counties": null,
-		"launchYear": null,
-		"type": "Public"
-	}
+  {
+    "date": "2021-01-01",
+    "localName": "New Year's Day",
+    "name": "New Year's Day",
+    "countryCode": "NZ",
+    "fixed": false,
+    "global": true,
+    "counties": null,
+    "launchYear": null,
+    "type": "Public"
+  },
+  {
+    "date": "2021-01-04",
+    "localName": "Day after New Year's Day",
+    "name": "Day after New Year's Day",
+    "countryCode": "NZ",
+    "fixed": false,
+    "global": true,
+    "counties": null,
+    "launchYear": null,
+    "type": "Public"
+  },
+  {
+    "date": "2021-02-08",
+    "localName": "Waitangi Day",
+    "name": "Waitangi Day",
+    "countryCode": "NZ",
+    "fixed": false,
+    "global": true,
+    "counties": null,
+    "launchYear": null,
+    "type": "Public"
+  }
 ]
 ```
+
 </details>
-
-### Example
-
-```txt
-$> go run main.go
-Today we are the 2021-01-26.
-Next public holiday is 'Waitangi Day' the 2021-02-08.
-```
 
 ## Help
 
-Remember that it's a good idea to search online at any time!
+Remember that you can search online at any time!
 
 If you are stuck, check the steps to follow below. For each of them, you can have a
 look at the corresponding tip and solution.
@@ -71,7 +74,7 @@ look at the corresponding tip and solution.
 <details>
 <summary>Steps to follow</summary>
 
-1. Call the URL with the current year
+1. Create the URL with the current year
 
 1. Define the type that will contain the API response
 
@@ -79,13 +82,12 @@ look at the corresponding tip and solution.
 
 1. Find out which public holiday is next based on the current time
 
-
 </details>
 
 <details>
 <summary>Tip 1</summary>
 
-To call the URL with the current year, you can use the following functions:
+To create the URL with the current year, you can use the following functions:
 
 - [`fmt.Sprintf`](https://golang.org/pkg/fmt/#Sprintf): to insert a variable in a string
 
@@ -106,8 +108,8 @@ now := time.Now()
 // Extract the year of the current time
 year := now.Year()
 
-// Construct the url with the base URL + current year + country code
-path := fmt.Sprintf("%s/%d/NZ", publicHolidayAPI, year)
+// Build the url with the base URL + current year + country code
+url := fmt.Sprintf("%s/%d/NZ", publicHolidayAPI, year)
 
 // Note that you could also make the country code variable :)
 ```
@@ -117,13 +119,14 @@ path := fmt.Sprintf("%s/%d/NZ", publicHolidayAPI, year)
 <details>
 <summary>Tip 2</summary>
 
-You can enter the url in your favorite web browser and look how the response
+You can enter the url in your favorite web browser and look at how the response
 looks like.
 
 Focus on what you are trying to achieve: display the name of the next public
 holiday.
 
 The only information you need are:
+
 - `name`: display the name of the public holiday,
 - `date`: date of the public holiday.
 
@@ -155,14 +158,13 @@ To call the API and retrieve the response, have a look at the following
 functions:
 
 - [`http.Get`](https://golang.org/pkg/net/http/#example_Get): Send a GET
-request to the specified URL
+  request to the specified URL
 
 - [`json.NewDecoder`](https://golang.org/pkg/encoding/json/#NewDecoder) and
-[`Decode`](https://golang.org/pkg/encoding/json/#Decoder.Decode): To decode the
-response body (formatted in JSON) into a given struct.
+  [`Decode`](https://golang.org/pkg/encoding/json/#Decoder.Decode): To decode the
+  response body (formatted in JSON) into a given struct.
 
 </details>
-
 
 <details>
 <summary>Solution 3</summary>
@@ -170,13 +172,14 @@ response body (formatted in JSON) into a given struct.
 ```go
 	// Send a GET request to the public holiday API (see tip 1 to make the year
 	// always valid!)
-	const path = "https://date.nager.at/api/v2/publicholidays/2021/NZ"
-	resp, err := http.Get(path)
+	const url = "https://date.nager.at/api/v2/publicholidays/2021/NZ"
+	resp, err := http.Get(url)
 
 	// Remember to always handle the error! You can print it or return it if you
 	// are in a function.
 	if err != nil {
-		fmt.Printf("Could not fetch public holidays from API %s: %w\n", path, err)
+		fmt.Printf("Could not fetch public holidays from API %s: %w\n", url, err)
+		return
 	}
 
 	// Because the API's response is an array of public holidays, we need to store
@@ -188,39 +191,37 @@ response body (formatted in JSON) into a given struct.
 	// We decode the response body in our struct and handle the error directly.
 	if err := json.NewDecoder(resp.Body).Decode(&publicHolidays); err != nil {
 		fmt.Printf("could not decode request body: %w\n", err)
+		return
 	}
 ```
 
 </details>
 
-
 <details>
-<summary>Tip 4</summary>	
+<summary>Tip 4</summary>
 
 The last step is to compare the public holidays date with our current time.
 
-
-You will need to loop through each public holiday (from the api response) to:
+You will need to loop through each public holiday (from the API response) to:
 
 1. [`Parse`](https://golang.org/pkg/time/#Parse) the date (see example
-[here](https://gobyexample.com/time-formatting-parsing)): It will transform the
-`string` into a `time`. The `time` type allows you to do operations with the
-time (like comparing which time is after another one for example!)
+   [here](https://gobyexample.com/time-formatting-parsing)): It will transform the
+   `string` into a `time`. The `time` type allows you to do operations with the
+   time (like comparing which time is after another one for example!)
 
 1. Compare the current time with the date of the public holiday: if you have a
-look at the API response, you can see that the dates are ordered (from Jan. to
-Dec.). The first one to be greater than the current time is the correct one!
-Have a look at the [`After`](https://golang.org/pkg/time/#Time.After) function.
+   look at the API response, you can see that the dates are ordered (from Jan. to
+   Dec.). The first one to be greater than the current time is the correct one!
+   Have a look at the [`After`](https://golang.org/pkg/time/#Time.After) function.
 
 </details>
-
 
 <details>
 <summary>Solution 4</summary>
 
 ```go
-// getNextPublicHoliday takes in parameter all the public holidays or the current year
-// and return the next incoming public holiday.
+// getNextPublicHoliday takes as a parameter all the public holidays of the current year
+// and return the next public holiday.
 func getNextPublicHoliday(publicHolidays []PublicHoliday) (*PublicHoliday, error) {
 	// Get the current date and time.
 	now := time.Now()
@@ -228,7 +229,7 @@ func getNextPublicHoliday(publicHolidays []PublicHoliday) (*PublicHoliday, error
 	// Loop through all the public holidays this year.
 	for _, ph := range publicHolidays {
 		// Convert the public holiday date from a `string` into a `time`.
-		// Thanks to this, we can use functions specific to time (otherwise, Go
+		// We can now use functions specific to time (otherwise, Go
 		// doesn't know what our `string` contains).
 		date, err := time.Parse("2006-01-02", ph.Date)
 		if err != nil {
@@ -250,3 +251,8 @@ func getNextPublicHoliday(publicHolidays []PublicHoliday) (*PublicHoliday, error
 ```
 
 </details>
+
+## Useful links
+
+- [`http` package](https://golang.org/pkg/net/http/)
+- [`time` package](https://golang.org/pkg/net/time/)
