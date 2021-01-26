@@ -226,6 +226,7 @@ func getLocation() (*Location, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer resp.Body.Close()
 
 	loc := Location{}
 	if err := json.NewDecoder(resp.Body).Decode(&loc); err != nil {
@@ -290,6 +291,7 @@ func getWeatherForecast(lon, lat float64) (*WeatherForecast, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to GET 7timer: %w", err)
 	}
+	defer resp.Body.Close()
 
 	// Declare the struct that will receive the API response.
 	//

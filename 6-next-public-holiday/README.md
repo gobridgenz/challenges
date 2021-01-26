@@ -182,6 +182,8 @@ functions:
 		return
 	}
 
+	defer resp.Body.Close()
+
 	// Because the API's response is an array of public holidays, we need to store
 	// it in a slice.
 	// Let's start by declaring a slice of our struct (see declaration in
