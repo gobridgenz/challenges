@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
-	"os"
 	"time"
 )
 
@@ -15,27 +15,26 @@ type PublicHoliday struct {
 }
 
 func main() {
-	// Get all public holiday for the current year.
+	// Get all public holidays for the current year.
 	publicHolidays, err := getNZPublicHolidays()
 	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(1)
+		log.Fatal(err)
 	}
 
 	// Find the next public holiday.
 	ph, err := getNextPublicHoliday(publicHolidays)
 	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(1)
+		log.Fatal(err)
 	}
 
 	fmt.Printf("Next public holiday is '%s' the %s.\n", ph.Name, ph.Date)
 }
 
-// getNZPublicHolidays send a request to retrieve all the public holidays of
+const publicHolidayAPI = "https://date.nager.at/api/v2/publicholidays"
+
+// getNZPublicHolidays sends a request to retrieve all the public holidays of
 // the current year.
 func getNZPublicHolidays() ([]PublicHoliday, error) {
-	const publicHolidayAPI = "https://date.nager.at/api/v2/publicholidays"
 	year := time.Now().Year()
 	path := fmt.Sprintf("%s/%d/NZ", publicHolidayAPI, year)
 
@@ -43,8 +42,9 @@ func getNZPublicHolidays() ([]PublicHoliday, error) {
 	if err != nil {
 		return nil, fmt.Errorf("could not fetch public holidays from API %s: %w", path, err)
 	}
+	defer resp.Body.Close()
 
-	publicHolidays := []PublicHoliday{}
+	var publicHolidays []PublicHoliday
 	if err := json.NewDecoder(resp.Body).Decode(&publicHolidays); err != nil {
 		return nil, fmt.Errorf("could not decode request body: %w", err)
 	}
@@ -59,7 +59,7 @@ func getNextPublicHoliday(publicHolidays []PublicHoliday) (*PublicHoliday, error
 	for _, ph := range publicHolidays {
 		date, err := time.Parse("2006-01-02", ph.Date)
 		if err != nil {
-			return nil, fmt.Errorf("failed to parse time %s: %w", ph.Date, err)
+			return nil, fmt.Errorf("failed to parse time %q: %w", ph.Date, err)
 		}
 
 		if date.After(now) {
