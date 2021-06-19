@@ -6,22 +6,14 @@ import (
 
 func main() {
 	for i := 1; i <= 100; i++ {
-		if fizz(i) && buzz(i) {
+		if i%3 == 0 && i%5 == 0 {
 			fmt.Println("fizzbuzz")
-		} else if fizz(i) {
+		} else if i%3 == 0 {
 			fmt.Println("fizz")
-		} else if buzz(i) {
+		} else if i%5 == 0 {
 			fmt.Println("buzz")
 		} else {
 			fmt.Println(i)
 		}
 	}
-}
-
-func fizz(value int) bool {
-	return value%3 == 0
-}
-
-func buzz(value int) bool {
-	return value%5 == 0
 }

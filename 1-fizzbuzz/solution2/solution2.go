@@ -5,17 +5,13 @@ import (
 )
 
 func main() {
-	fizzBuzz()
-}
-
-func fizzBuzz() {
 	for i := 1; i <= 100; i++ {
 		s := ""
 		if i%3 == 0 {
-			s = "Fizz"
+			s = "fizz"
 		}
 		if i%5 == 0 {
-			s += "Buzz"
+			s += "buzz"
 		}
 
 		if s == "" {
@@ -23,6 +19,5 @@ func fizzBuzz() {
 		} else {
 			fmt.Println(s)
 		}
-
 	}
 }
